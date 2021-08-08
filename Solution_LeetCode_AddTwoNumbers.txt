@@ -1,0 +1,88 @@
+Question Link - 
+https://leetcode.com/problems/add-two-numbers/
+
+===========================================================
+
+Solution Stats -
+
+Runtime: 1 ms, faster than 100.00% of Java online submissions for Add Two Numbers.
+Memory Usage: 39.3 MB, less than 50.78% of Java online submissions for Add Two Numbers.
+
+===========================================================
+
+
+Solution - 
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode sumList = null;
+        ListNode sumListHead = sumList;
+        int carryValue = 0;
+        while(l1!= null && l2!=null){
+            int sumValue = l1.val + l2.val + carryValue;
+            ListNode newNode = new ListNode(sumValue%10);
+            if(sumList == null){
+                sumList = newNode;
+                sumListHead = sumList;
+            }else{
+                sumList.next = newNode;
+                sumList = sumList.next;
+            }
+            l1 = l1.next;
+            l2 = l2.next;
+            if(sumValue>=10){
+                carryValue = sumValue/10;
+            }else{
+                carryValue = 0;
+            }
+        }
+        while(l1!=null){
+            int sumValue = l1.val + carryValue;
+            ListNode newNode = new ListNode(sumValue%10);
+            if(sumList == null){
+                sumList = newNode;
+                sumListHead = sumList;
+            }else{
+                sumList.next = newNode;
+                sumList = sumList.next;
+            }
+            l1 = l1.next;
+            if(sumValue>=10){
+                carryValue = sumValue/10;
+            }else{
+                carryValue = 0;
+            }
+        }
+        while(l2!=null){
+            int sumValue = l2.val + carryValue;
+            ListNode newNode = new ListNode(sumValue%10);
+            if(sumList == null){
+                sumList = newNode;
+                sumListHead = sumList;
+            }else{
+                sumList.next = newNode;
+                sumList = sumList.next;
+            }
+            l2 = l2.next;
+            if(sumValue>=10){
+                carryValue = sumValue/10;
+            }else{
+                carryValue = 0;
+            }
+        }
+        if(carryValue>0){
+            ListNode newNode = new ListNode(carryValue);
+            sumList.next = newNode;
+        }
+        return sumListHead;
+    }
+}
